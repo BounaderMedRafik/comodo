@@ -1,4 +1,4 @@
-import { Code, Command, LaptopMinimal } from "lucide-react";
+import { Code, LaptopMinimal } from "lucide-react";
 import { navlinkProps } from "./types";
 
 export const navlinks: navlinkProps[] = [
@@ -13,3 +13,6 @@ export const navlinks: navlinkProps[] = [
     icon: <LaptopMinimal size={12} />,
   },
 ];
+
+export const BannerContent: string =
+  "comodo — Beta version, and yet we still covering";

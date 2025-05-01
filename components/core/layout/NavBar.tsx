@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
-import { navlinks } from "@/db/core-data";
+import { BannerContent, navlinks } from "@/db/core-data";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -7,6 +7,7 @@ import React from "react";
 const NavBar = () => {
   return (
     <div className="w-full fixed top-0 left-0 md:pt-2 bg-transparent md:bg-gradient-to-b from-background to-transparent  ">
+      {BannerContent && <Banner text={BannerContent} />}
       <div className=" wrapper py-2 flex items-center justify-between bg-background/90 backdrop-blur-xl pr-3 pl-2 md:rounded-2xl md:shadow-2xl shadow-foreground/5 md:border">
         {/* logo */}
         <Link href={"/"}>
@@ -73,6 +74,14 @@ export const SearchComponent = ({ type }: { type: "nav" | "hero" }) => {
           </div>
         </div>
       )}
+    </div>
+  );
+};
+
+const Banner = ({ text }: { text: string }) => {
+  return (
+    <div className=" wrapper text-xs  bg-primary text-background font-mono flex items-center justify-center px-2 py-1 pb-5 -mb-4 rounded-t-2xl">
+      {text}
     </div>
   );
 };

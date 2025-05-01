@@ -3,6 +3,7 @@ import { commands } from "@/db/commands-v1";
 import Link from "next/link";
 import React from "react";
 import { SearchComponent } from "../layout/NavBar";
+import { ProgressiveBlur } from "@/components/motion-primitives/progressive-blur";
 
 const Hero = () => {
   return (
@@ -31,7 +32,7 @@ const Hero = () => {
         Linux skills with clarity and ease.
       </div>
 
-      <div className=" pt-14  flex flex-wrap gap-1 relative">
+      <div className=" pt-14  flex flex-wrap items-center justify-center gap-1 relative p-3">
         {commands.map((item, i) => (
           <div key={i} className="">
             <Link key={i} href={`commands/${item.command}`}>
@@ -51,8 +52,11 @@ const Hero = () => {
             </Link>
           </div>
         ))}
-        <div className=" absolute top-0 left-0 bg-gradient-to-b from-transparent to-background w-full h-full" />
-
+        <div className=" absolute top-0 left-0  bg-gradient-to-b from-transparent to-background w-full h-full" />
+        <ProgressiveBlur
+          className="pointer-events-none absolute bottom-0 left-0 h-2/3  w-full"
+          blurIntensity={1}
+        />
         <div className=" absolute top-1/2 left-1/2 -translate-1/2">
           <SearchComponent type="hero" />
         </div>
