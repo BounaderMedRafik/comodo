@@ -1,9 +1,11 @@
+"use client";
 import { buttonVariants } from "@/components/ui/button";
 import { commands } from "@/db/commands-v1";
 import Link from "next/link";
 import React from "react";
 import { SearchComponent } from "../layout/NavBar";
 import { ProgressiveBlur } from "@/components/motion-primitives/progressive-blur";
+import { motion } from "motion/react";
 
 const Hero = () => {
   return (
@@ -34,7 +36,23 @@ const Hero = () => {
 
       <div className=" pt-14  flex flex-wrap items-center justify-center gap-1 relative p-3">
         {commands.map((item, i) => (
-          <div key={i} className="">
+          <motion.div
+            initial={{
+              y: 15,
+              opacity: 0,
+              filter: "blur(10px)",
+            }}
+            animate={{
+              y: 0,
+              opacity: 1,
+              filter: "blur(0px)",
+              transition: {
+                duration: i * 0.1,
+              },
+            }}
+            key={i}
+            className=""
+          >
             <Link key={i} href={`commands/${item.command}`}>
               <div
                 className={buttonVariants({
@@ -50,16 +68,34 @@ const Hero = () => {
                 </div>
               </div>
             </Link>
-          </div>
+          </motion.div>
         ))}
         <div className=" absolute top-0 left-0  bg-gradient-to-b from-transparent to-background w-full h-full" />
         <ProgressiveBlur
           className="pointer-events-none absolute bottom-0 left-0 h-2/3  w-full"
           blurIntensity={1}
         />
-        <div className=" absolute top-1/2 left-1/2 -translate-1/2">
+        <motion.div
+          initial={{
+            scale: 0.7,
+            y: 10,
+            opacity: 0,
+            filter: "blur(10px)",
+          }}
+          animate={{
+            scale: 1,
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            transition: {
+              duration: 1,
+              ease: [0.25, 1, 0.5, 1],
+            },
+          }}
+          className=" absolute top-1/2 left-1/2 -translate-1/2"
+        >
           <SearchComponent type="hero" />
-        </div>
+        </motion.div>
       </div>
     </div>
   );

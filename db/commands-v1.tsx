@@ -66,7 +66,11 @@ export const commands: Command[] = [
     command: "rsync",
     description: "Synchronize files and directories between two locations",
   },
-  { command: "alias", description: "Create custom shortcuts for commands" },
+  {
+    command: "alias",
+    description: "Create custom shortcuts for commands",
+    content: "content/alias.md",
+  },
   { command: "unalias", description: "Remove aliases" },
   { command: "history", description: "Show command history" },
   { command: "clear", description: "Clear the terminal screen" },
