@@ -19,7 +19,7 @@ interface PageProps {
 export default function CommandPage({ params }: PageProps) {
   const article = commands.find((cmd) => cmd.command === params.id);
   if (!article) notFound();
-
+  //@ts-ignore
   const filePath = path.join(process.cwd(), article.content);
   const markdown = fs.readFileSync(filePath, "utf8");
 
@@ -36,14 +36,19 @@ export default function CommandPage({ params }: PageProps) {
 
   return (
     <main className="max-w-4xl mx-auto pt-12 flex flex-col lg:flex-row gap-8">
-      <div className="flex-1">
-        <h1 className="text-3xl font-bold mb-6">{article.command}</h1>
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeHighlight, rehypeRaw]}
-        >
-          {markdownWithIds}
-        </ReactMarkdown>
+      <div className="flex-1 relative bg-background">
+        <div className=" text-7xl font-black opacity-50 absolute -top-12 left-0 z-10 font-dots">
+          {article.command}
+        </div>
+        <div className=" bg-background/20 p-3 md:p-0 backdrop-blur-2xl rounded-3xl relative z-20">
+          <h1 className="text-3xl font-bold mb-6 pl-3">{article.command}</h1>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeHighlight, rehypeRaw]}
+          >
+            {markdownWithIds}
+          </ReactMarkdown>
+        </div>
       </div>
 
       <aside className="hidden lg:block w-64 shrink-0 border-l border-dashed">

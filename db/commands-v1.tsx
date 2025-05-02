@@ -1,8 +1,16 @@
 import { Command } from "./types";
 
 export const commands: Command[] = [
-  { command: "ls", description: "List directory contents" },
-  { command: "cd", description: "Change the current directory" },
+  {
+    command: "ls",
+    description: "List directory contents",
+    content: "content/ls.md",
+  },
+  {
+    command: "cd",
+    description: "Change the current directory",
+    content: "content/cd.md",
+  },
   { command: "pwd", description: "Print the current working directory" },
   { command: "mkdir", description: "Create a new directory" },
   { command: "rmdir", description: "Remove an empty directory" },

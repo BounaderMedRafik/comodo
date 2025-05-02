@@ -82,7 +82,7 @@ const NavBar = () => {
           showNav ? "-translate-y-full" : " translate-y-0"
         }`}
       >
-        <div className=" max-w-4xl w-full">
+        <div className=" max-w-5xl w-full px-3 md:px-0">
           <img
             className=" size-10 rounded-full shadow"
             src="/brand/COMODOFAV.png"
@@ -117,7 +117,7 @@ export const SearchComponent = ({ type }: { type: "nav" | "hero" }) => {
 
 const Banner = ({ text }: { text: string }) => {
   return (
-    <div className="wrapper text-xs bg-primary text-background font-mono flex items-center justify-center px-2 py-1 pb-5 -mb-4 rounded-t-2xl">
+    <div className="wrapper text-xs bg-primary text-background font-mono flex items-center justify-center px-2 py-1 pb-5 -mb-4 md:rounded-t-2xl">
       {text}
     </div>
   );
