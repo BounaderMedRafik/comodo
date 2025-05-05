@@ -64,6 +64,9 @@ const CommandsPageContent = () => {
         <div className="text-sm opacity-75 font-normal max-w-xs">
           Search by command or description.
         </div>
+        <div className=" text-xs opacity-50 mt-4">
+          Available {commands.length} command.
+        </div>
         <div className="relative mt-7">
           <input
             ref={inputRef}
@@ -90,7 +93,7 @@ const CommandsPageContent = () => {
             <img
               src="/illustration-of-a-sad-crying-comodo-white-background.jpg"
               alt=""
-              className="w-24 mx-auto"
+              className="w-24 mx-auto border-none"
             />
             <div className="max-w-3xs mx-auto mt-2">
               Didn't find what you're searching for.

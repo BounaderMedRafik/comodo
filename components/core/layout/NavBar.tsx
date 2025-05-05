@@ -2,6 +2,7 @@
 
 import { buttonVariants } from "@/components/ui/button";
 import { BannerContent, navlinks } from "@/db/core-data";
+import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -31,12 +32,19 @@ const NavBar = () => {
   return (
     <>
       <div
-        className={`w-full fixed top-0 left-0 md:pt-2 z-50 transition-transform duration-300 ${
-          showNav ? "translate-y-0" : "-translate-y-full"
-        }`}
+        className={cn(
+          `w-full fixed top-0 left-0 md:pt-2 z-50 transition-transform duration-300 ${
+            showNav ? "translate-y-0" : "-translate-y-full"
+          }`
+        )}
       >
         {BannerContent && <Banner text={BannerContent} />}
-        <div className="wrapper py-2 flex items-center justify-between bg-background/90 backdrop-blur-xl pr-3 pl-2 md:rounded-2xl md:shadow-2xl shadow-foreground/5 md:border">
+        <div
+          className={cn(
+            "wrapper py-2 flex items-center justify-between bg-background/90 backdrop-blur-xl pr-3 pl-2 md:rounded-2xl md:shadow-2xl shadow-foreground/5 md:border",
+            BannerContent && "md:border-primary border-4"
+          )}
+        >
           {/* Logo */}
           <Link href={"/"}>
             <div className="flex items-center gap-2 group">

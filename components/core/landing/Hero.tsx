@@ -14,7 +14,7 @@ const Hero = () => {
         <div className="flex items-end gap-2">
           <div className="relative">
             <img
-              className="size-18 relative z-20 rounded-2xl shadow-2xl"
+              className="size-18 relative z-20 rounded-2xl shadow-2xl p-0 m-0"
               src="/brand/COMODO.png"
               alt=""
             />
