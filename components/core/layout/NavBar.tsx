@@ -1,6 +1,12 @@
 "use client";
 
 import { buttonVariants } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { BannerContent, navlinks } from "@/db/core-data";
 import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
@@ -103,22 +109,36 @@ const NavBar = () => {
 };
 
 export const SearchComponent = ({ type }: { type: "nav" | "hero" }) => {
-  return type === "nav" ? (
-    <div
-      className={buttonVariants({
-        variant: "secondary",
-        size: "icon",
-        className: "opacity-100 hover:opacity-75 transition-all aspect-square",
-      })}
-    >
-      <Search size={12} />
-    </div>
-  ) : (
-    <div className="flex items-center justify-center gap-3 min-w-md p-2 px-3.5 bg-background backdrop-blur-lg hover:-translate-y-1 transition-all rounded-lg border shadow-2xl cursor-pointer ">
-      <Search size={14} />
-      <div className=" text-sm font-mono opacity-50 top-1">
-        Search for anything...
-      </div>
+  return (
+    <div>
+      <Dialog>
+        <DialogTrigger asChild>
+          {type === "nav" ? (
+            <div
+              className={buttonVariants({
+                variant: "secondary",
+                size: "icon",
+                className:
+                  "opacity-100 hover:opacity-75 transition-all aspect-square",
+              })}
+            >
+              <Search size={12} />
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-3 min-w-md p-2 px-3.5 bg-background backdrop-blur-lg hover:-translate-y-1 transition-all rounded-lg border shadow-2xl cursor-pointer ">
+              <Search size={14} />
+              <div className=" text-sm font-mono opacity-50 top-1">
+                Search for anything...
+              </div>
+            </div>
+          )}
+        </DialogTrigger>
+
+        <DialogContent className=" p-0 m-0 bg-transparent border-none">
+          <DialogTitle className=" hidden" />
+          hello
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

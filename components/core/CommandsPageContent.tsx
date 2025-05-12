@@ -1,6 +1,7 @@
 "use client";
 
 import { commands } from "@/db/commands-v1";
+import { cn } from "@/lib/utils";
 import { ArrowUp, Command, Search } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
@@ -26,6 +27,7 @@ const highlightMatch = (text: string, query: string) => {
 
 const CommandsPageContent = () => {
   const [search, setSearch] = useState("");
+  const [searchDifficulty, setSearchDifficulty] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -42,8 +44,9 @@ const CommandsPageContent = () => {
 
   const filtered = commands.filter(
     (cmd) =>
-      cmd.command.toLowerCase().includes(search.toLowerCase()) ||
-      cmd.description.toLowerCase().includes(search.toLowerCase())
+      (cmd.command.toLowerCase().includes(search.toLowerCase()) ||
+        cmd.description.toLowerCase().includes(search.toLowerCase())) &&
+      (!searchDifficulty || cmd.difficulty === searchDifficulty)
   );
 
   const sorted = [...filtered].sort((a, b) =>
@@ -85,11 +88,51 @@ const CommandsPageContent = () => {
             +K
           </div>
         </div>
+
+        {/* Difficulty Filter Buttons */}
+
+        <div className="flex justify-center mt-4 gap-2 text-xs font-mono">
+          {["Beginner", "Intermediate", "Advanced"].map((level) => {
+            const count = commands.filter(
+              (cmd) => cmd.difficulty === level
+            ).length;
+            return (
+              <button
+                key={level}
+                onClick={() =>
+                  setSearchDifficulty((prev) => (prev === level ? "" : level))
+                }
+                className={cn(
+                  "px-2 py-0.5 rounded-full  text-xs border border-transparent cursor-pointer text-foreground/75",
+                  searchDifficulty === level ? "  border-primary/25 border" : ""
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  <div>
+                    {level} {count}
+                  </div>
+                  <div
+                    className={cn(
+                      "size-3 rounded-full shadow",
+                      level === "Beginner"
+                        ? "bg-green-400"
+                        : level === "Intermediate"
+                        ? "bg-yellow-400"
+                        : level === "Advanced"
+                        ? "bg-red-400"
+                        : ""
+                    )}
+                  />
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="mt-8 grid gap-6 text-sm font-mono">
         {filtered.length === 0 ? (
-          <div className="text-center text-zinc-500 italic">
+          <div className="text-center text-zinc-500 italic min-h-[25vh]">
             <img
               src="/illustration-of-a-sad-crying-comodo-white-background.jpg"
               alt=""
@@ -107,11 +150,31 @@ const CommandsPageContent = () => {
               </div>
               {cmds.map((cmd, i) => (
                 <Link href={`/commands/${cmd.command}`} key={i}>
-                  <div className="border-b border-dashed py-2 group">
-                    <strong className="text-primary group-hover:underline-offset-4 group-hover:underline">
-                      {highlightMatch(cmd.command, search)}
-                    </strong>
-                    : {highlightMatch(cmd.description, search)}
+                  <div className="border-b border-dashed py-2 group flex justify-between items-center gap-4">
+                    <div className="flex-1">
+                      <strong className="text-primary group-hover:underline-offset-4 group-hover:underline">
+                        {highlightMatch(cmd.command, search)}
+                      </strong>
+                      : {highlightMatch(cmd.description, search)}
+                    </div>
+
+                    {cmd.difficulty && (
+                      <span className="text-xs opacity-75 flex items-center gap-2">
+                        <div>{cmd.difficulty}</div>
+                        <div
+                          className={cn(
+                            "size-3 rounded-full shadow",
+                            cmd.difficulty === "Beginner"
+                              ? "bg-green-400"
+                              : cmd.difficulty === "Intermediate"
+                              ? "bg-yellow-400"
+                              : cmd.difficulty === "Advanced"
+                              ? "bg-red-400"
+                              : ""
+                          )}
+                        />
+                      </span>
+                    )}
                   </div>
                 </Link>
               ))}
@@ -121,14 +184,17 @@ const CommandsPageContent = () => {
       </div>
 
       {filtered.length > 0 && (
-        <div className="min-h-[40vh] flex items-center justify-center">
+        <a
+          href="#"
+          className="min-h-[40vh] group flex items-center justify-center"
+        >
           <div className="text-sm opacity-75 flex items-center gap-2 font-mono">
-            <div>Go back to top</div>
+            <div className="group-hover:underline">Go back to top</div>
             <div>
               <ArrowUp size={13} />
             </div>
           </div>
-        </div>
+        </a>
       )}
     </div>
   );

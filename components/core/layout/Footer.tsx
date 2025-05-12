@@ -55,7 +55,7 @@ const Footer = () => {
                     {subitem.upcoming ? (
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <div className=" items-center gap-2 flex opacity-75 hover:opacity-100 group transition-all  cursor-default">
+                          <div className=" w-fit items-center gap-2 flex opacity-75 hover:opacity-100 group transition-all  cursor-default">
                             <div className=" group-hover:text-primary transition-all">
                               {subitem.icon}
                             </div>
@@ -65,12 +65,12 @@ const Footer = () => {
                           </div>
                         </TooltipTrigger>
                         <TooltipContent>
-                          {subitem.title} is upcoming
+                          {subitem.title} is coming soon
                         </TooltipContent>
                       </Tooltip>
                     ) : (
                       <Link href={subitem.link}>
-                        <div className="items-center gap-2 flex opacity-75 hover:opacity-100 group transition-all">
+                        <div className="items-center w-fit gap-2 flex opacity-75 hover:opacity-100 group transition-all">
                           <div className=" group-hover:text-primary transition-all">
                             {subitem.icon}
                           </div>

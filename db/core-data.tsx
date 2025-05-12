@@ -8,7 +8,7 @@ import {
   Paintbrush,
   Sparkle,
 } from "lucide-react";
-import { footerlinkProps, navlinkProps } from "./types";
+import { contributersProps, footerlinkProps, navlinkProps } from "./types";
 
 export const navlinks: navlinkProps[] = [
   {
@@ -84,3 +84,18 @@ export const footerlinks: footerlinkProps[] = [
 
 export const lastupdate: string = "May 05 2025, 2:04am";
 export const quote: string = "who am i without her?";
+
+export const contributors: contributersProps[] = [
+  {
+    name: "Bounader Med Rafik",
+    link: "https://bmed.vercel.app/",
+    image: "https://avatars.githubusercontent.com/u/71353030?v=4",
+    role: "Creator & Developper",
+  },
+  {
+    name: "Monir siradj lamri",
+    link: "https://github.com/sirgio03",
+    image: "https://avatars.githubusercontent.com/u/141422129?v=4",
+    role: "Designer",
+  },
+];
