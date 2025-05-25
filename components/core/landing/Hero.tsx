@@ -3,26 +3,25 @@ import { buttonVariants } from "@/components/ui/button";
 import { commands } from "@/db/commands-v1";
 import Link from "next/link";
 import React from "react";
-import { SearchComponent } from "../layout/NavBar";
 import { ProgressiveBlur } from "@/components/motion-primitives/progressive-blur";
 import { motion } from "motion/react";
+import { SearchComponent } from "../layout/SearchComponent";
 
 const Hero = () => {
   return (
-    <div className="wrapper flex items-center justify-center flex-col pt-32">
+    <div className="wrapper flex items-center justify-center flex-col pt-32 pb-32 md:pb-0">
       <div>
-        <div className="flex items-end gap-2">
-          <div className="relative">
-            <img
-              className="size-18 relative z-20 rounded-2xl shadow-2xl p-0 m-0"
-              src="/brand/COMODO.png"
-              alt=""
-            />
-            <div className=" absolute top-1 left-1 size-18  z-10 rounded-2xl bg-foreground/75" />
-          </div>
-          <div className=" text-2xl font-mono font-semibold ">
-            <div className="">Comodo</div>
-            <div className=" -mt-2 text-base opacity-75">Linux Guide.</div>
+        <div className="flex flex-col items-center justify-center gap-2 group">
+          <img
+            className=" size-24 p-0 m-0  rounded-sm gap-0 border border-dashed"
+            src="/brand/v4/COMODO.png"
+            alt=""
+          />
+          <div className=" font-mono  font-semibold -mt-0.5 text-center">
+            <div>Comodo</div>
+            <div className="text-xs font-mono font-light -mt-1">
+              Linux Guide.
+            </div>
           </div>
         </div>
       </div>
@@ -34,7 +33,7 @@ const Hero = () => {
         Linux skills with clarity and ease.
       </div>
 
-      <div className=" pt-14  flex flex-wrap items-center justify-center gap-1 relative p-3">
+      <div className=" pt-14 hidden  md:flex flex-wrap items-center justify-center gap-1 relative p-3">
         {commands.map((item, i) => (
           <motion.div
             initial={{
@@ -58,7 +57,8 @@ const Hero = () => {
                 className={buttonVariants({
                   variant: "secondary",
                   size: "sm",
-                  className: "opacity-100 hover:opacity-10 transition-all",
+                  className:
+                    "opacity-100 hover:opacity-10 transition-all rounded-none text-sm",
                 })}
               >
                 <div className="flex items-center gap-2">
@@ -92,7 +92,7 @@ const Hero = () => {
               ease: [0.25, 1, 0.5, 1],
             },
           }}
-          className=" absolute top-1/2 left-1/2 -translate-1/2"
+          className=" absolute top-1/2 left-1/2 -translate-1/2 "
         >
           <SearchComponent type="hero" />
         </motion.div>

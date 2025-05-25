@@ -1,5 +1,6 @@
 import {
   Code,
+  Files,
   GitBranch,
   Github,
   Home,
@@ -12,14 +13,19 @@ import { contributersProps, footerlinkProps, navlinkProps } from "./types";
 
 export const navlinks: navlinkProps[] = [
   {
-    title: "commands",
+    title: "Commands",
     link: "/commands",
-    icon: <Code size={12} />,
+    icon: <Code size={14} />,
   },
   {
     title: "Distros",
     link: "/distros",
-    icon: <LaptopMinimal size={12} />,
+    icon: <LaptopMinimal size={14} />,
+  },
+  {
+    title: "Flatpak",
+    link: "/system-setup",
+    icon: <Files size={14} />,
   },
 ];
 
@@ -44,6 +50,11 @@ export const footerlinks: footerlinkProps[] = [
         title: "Distros",
         link: "/distros",
         icon: <LaptopMinimal size={12} />,
+      },
+      {
+        title: "Flatpak Gen",
+        link: "/system-setup",
+        icon: <Files size={14} />,
       },
       {
         title: "ComodoAi",
@@ -74,9 +85,8 @@ export const footerlinks: footerlinkProps[] = [
       },
       {
         title: "Design style",
-        link: "/design-style",
+        link: "/design",
         icon: <Paintbrush size={12} />,
-        upcoming: true,
       },
     ],
   },
@@ -93,9 +103,9 @@ export const contributors: contributersProps[] = [
     role: "Creator & Developper",
   },
   {
-    name: "Monir siradj lamri",
-    link: "https://github.com/sirgio03",
-    image: "https://avatars.githubusercontent.com/u/141422129?v=4",
-    role: "Designer",
+    name: "Distrosea",
+    link: "https://distrosea.com/",
+    image: "",
+    role: "Distro's logos source",
   },
 ];

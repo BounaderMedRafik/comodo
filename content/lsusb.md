@@ -12,7 +12,7 @@ Executing this command without any options will display a list of all USB buses 
 
 A typical output of `lsusb` might look like this:
 
-```
+```bash
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 Bus 001 Device 002: ID 8087:0024 Intel Corp. Integrated Rate Matching Hub
 Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub

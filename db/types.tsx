@@ -1,8 +1,17 @@
 export type Command = {
   command: string;
   description: string;
-  content?: string | undefined;
+  content: string;
   difficulty: "Beginner" | "Intermediate" | "Advanced";
+};
+
+export type distroProps = {
+  distro: string;
+  description: string;
+  content: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  image: string;
+  deskimage: string;
 };
 
 export type footerlinkProps = {
@@ -26,4 +35,19 @@ export type contributersProps = {
   link: string;
   image: string;
   role: string;
+};
+
+export type SetupCategory = {
+  id: string;
+  name: string;
+  icon: React.ReactNode; // Lucide icon name (string form, for dynamic rendering)
+  options: SetupOption[];
+};
+
+export type SetupOption = {
+  id: string;
+  label: string;
+  defaultSelected?: boolean;
+  command: string;
+  tags?: string[];
 };

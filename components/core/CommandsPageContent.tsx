@@ -77,7 +77,7 @@ const CommandsPageContent = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search commands..."
-            className="text-sm min-w-sm px-3 pl-8 py-1 bg-secondary rounded-lg focus-visible:outline-none font-normal"
+            className="text-sm min-w-sm px-3 pl-8 py-1 bg-secondary  focus-visible:outline-none font-normal"
           />
           <Search
             className="absolute top-1/2 -translate-y-1/2 left-3"
@@ -103,13 +103,14 @@ const CommandsPageContent = () => {
                   setSearchDifficulty((prev) => (prev === level ? "" : level))
                 }
                 className={cn(
-                  "px-2 py-0.5 rounded-full  text-xs border border-transparent cursor-pointer text-foreground/75",
+                  "px-2 py-0.5   text-xs border border-transparent cursor-pointer text-foreground/75",
                   searchDifficulty === level ? "  border-primary/25 border" : ""
                 )}
               >
                 <div className="flex items-center gap-2">
                   <div>
-                    {level} {count}
+                    {level}{" "}
+                    <span className=" hidden md:inline-block">{count}</span>
                   </div>
                   <div
                     className={cn(
@@ -145,13 +146,17 @@ const CommandsPageContent = () => {
         ) : (
           Object.entries(grouped).map(([letter, cmds]) => (
             <div key={letter}>
-              <div className="text-lg font-bold bg-primary text-background size-8 rounded-lg flex items-center justify-center mb-2">
+              <div className="text-lg font-bold bg-primary text-background size-8  flex items-center justify-center mb-2">
                 {letter}
               </div>
               {cmds.map((cmd, i) => (
-                <Link href={`/commands/${cmd.command}`} key={i}>
+                <Link
+                  href={`/commands/${cmd.command}`}
+                  className=" text-foreground"
+                  key={i}
+                >
                   <div className="border-b border-dashed py-2 group flex justify-between items-center gap-4">
-                    <div className="flex-1">
+                    <div className="flex-1 text-xs line-clamp-1">
                       <strong className="text-primary group-hover:underline-offset-4 group-hover:underline">
                         {highlightMatch(cmd.command, search)}
                       </strong>
@@ -160,7 +165,7 @@ const CommandsPageContent = () => {
 
                     {cmd.difficulty && (
                       <span className="text-xs opacity-75 flex items-center gap-2">
-                        <div>{cmd.difficulty}</div>
+                        <div className=" line-clamp-1">{cmd.difficulty}</div>
                         <div
                           className={cn(
                             "size-3 rounded-full shadow",

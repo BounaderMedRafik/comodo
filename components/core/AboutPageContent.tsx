@@ -26,18 +26,36 @@ const AboutPageContent = () => {
 
       <div className=" mt-10">
         <div className=" text-2xl font-mono">Contributors</div>
-        <div className=" grid grid-cols-3 mt-4">
+        <div className=" grid grid-cols-2 md:grid-cols-3 mt-4">
           {contributors.map((item, i) => (
-            <a key={i} href={item.link} target="_blank" className=" w-fit">
-              <div className="flex items-center gap-1 mt-2  w-fit">
-                <img
-                  className=" border-none rounded-full size-8 m-0 p-0"
-                  src={item.image}
-                  alt=""
-                />
+            <a
+              key={i}
+              href={item.link}
+              target="_blank"
+              className=" w-fit text-foreground"
+            >
+              <div className="flex items-center gap-1 mt-2  w-fit group">
+                {item.image ? (
+                  <img
+                    className=" border-none rounded-full size-8 m-0 p-0"
+                    src={item.image}
+                    alt=""
+                  />
+                ) : (
+                  <div
+                    className=" text-sm rounded-full font-mono font-black size-8 flex items-center justify-center pt-0.5
+                   bg-primary text-background line-clamp-1"
+                  >
+                    {item.name[0]}
+                  </div>
+                )}
                 <div>
-                  <div className=" text-sm">{item.name}</div>
-                  <div className=" text-xs opacity-75">{item.role}</div>
+                  <div className=" text-sm group-hover:underline  line-clamp-1">
+                    {item.name}
+                  </div>
+                  <div className=" text-xs opacity-75  line-clamp-1">
+                    {item.role}
+                  </div>
                 </div>
               </div>
             </a>

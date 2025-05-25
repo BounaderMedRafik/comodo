@@ -51,7 +51,7 @@
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.623 0.214 259.815);
+  --primary: oklch(0.4898 0.1008 239.18);
   --primary-foreground: oklch(0.97 0.014 254.604);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
@@ -85,7 +85,7 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.21 0.006 285.885);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.546 0.245 262.881);
+  --primary: oklch(0.4898 0.1008 239.18);
   --primary-foreground: oklch(0.379 0.146 265.522);
   --secondary: oklch(0.274 0.006 286.033);
   --secondary-foreground: oklch(0.985 0 0);
@@ -170,7 +170,9 @@
   p {
     @apply mb-5 leading-relaxed;
   }
-
+  a {
+    @apply text-primary;
+  }
   li {
     @apply mb-2 ml-4;
   }
@@ -211,7 +213,7 @@
   }
 
   pre code {
-    @apply p-0 bg-transparent border rounded-sm  my-3;
+    @apply p-0 bg-transparent border rounded-sm max-w-fit  my-3;
   }
 
   /* Tables */
@@ -242,4 +244,24 @@
 html {
   scroll-padding-top: 250px; /* adjust as needed based on navbar height */
   scroll-behavior: smooth;
+}
+
+/* globals.css */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.4);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Firefox support */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 100, 100, 0.4) transparent;
 }

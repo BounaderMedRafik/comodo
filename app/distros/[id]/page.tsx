@@ -1,41 +1,40 @@
 import fs from "fs";
 import path from "path";
 import { notFound } from "next/navigation";
+import { use, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/mono-blue.css";
 
-import { commands } from "@/db/commands-v1";
-import TableOfContents from "@/components/core/layout/TableOfContents";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { use, useMemo } from "react";
+import TableOfContents from "@/components/core/layout/TableOfContents";
+import { distros } from "@/db/distros-v1";
 
-// Type for async params
+// Define async params type
 type PageParams = Promise<{ id: string }>;
 
-interface CommandPageProps {
+interface DistroPageProps {
   params: PageParams;
 }
 
-export default function CommandPage({ params }: CommandPageProps) {
-  const { id } = use(params); // use() to unwrap async params
+export default function DistroPage({ params }: DistroPageProps) {
+  const { id } = use(params); // unwrap async params
 
-  const articleIndex = commands.findIndex((cmd) => cmd.command === id);
+  const articleIndex = distros.findIndex((cmd) => cmd.distro === id);
   if (articleIndex === -1) notFound();
 
-  const article = commands[articleIndex];
-  const previous = commands[articleIndex - 1];
-  const next = commands[articleIndex + 1];
+  const article = distros[articleIndex];
+  const previous = distros[articleIndex - 1];
+  const next = distros[articleIndex + 1];
 
-  // Read markdown content
+  // Read the Markdown file at build-time or server-side
   const filePath = path.join(process.cwd(), article.content);
   const markdown = fs.readFileSync(filePath, "utf8");
 
-  // Inject IDs for headings
   const markdownWithIds = useMemo(() => {
     return markdown.replace(/^(#{1,6})\s+(.*)$/gm, (_, level, text) => {
       const id = text
@@ -50,11 +49,21 @@ export default function CommandPage({ params }: CommandPageProps) {
     <main className="max-w-4xl mx-auto pt-12 flex flex-col lg:flex-row gap-8">
       <div className="flex-1 max-w-3xl relative bg-background">
         <div className="text-7xl font-black opacity-50 absolute -top-12 left-0 z-10 font-dots">
-          {article.command}
+          {article.distro}
         </div>
 
-        <div className="bg-background/20 p-3 md:p-0 backdrop-blur-2xl relative z-20">
-          <h1 className="text-3xl font-bold mb-6 pl-3">{article.command}</h1>
+        <a href={article.deskimage} target="_blank">
+          <div className="relative">
+            <img
+              src={article.deskimage}
+              className="rounded-none mb-2 shadow-2xl relative z-40"
+              alt={`${article.distro} desktop screenshot`}
+            />
+          </div>
+        </a>
+
+        <div className="p-3 md:p-0 relative z-20">
+          <h1 className="text-3xl font-bold mb-6">{article.distro}</h1>
 
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -66,12 +75,12 @@ export default function CommandPage({ params }: CommandPageProps) {
           <footer className="mt-8 flex justify-between text-sm text-muted-foreground border-t pt-4 pb-24">
             {previous ? (
               <Link
-                href={`/commands/${previous.command}`}
+                href={`/distros/${previous.distro}`}
                 className={buttonVariants({ variant: "secondary", size: "sm" })}
               >
                 <div className="flex items-center gap-2">
                   <ArrowLeft size={14} />
-                  <span>{previous.command}</span>
+                  <span>{previous.distro}</span>
                 </div>
               </Link>
             ) : (
@@ -80,11 +89,11 @@ export default function CommandPage({ params }: CommandPageProps) {
 
             {next ? (
               <Link
-                href={`/commands/${next.command}`}
+                href={`/distros/${next.distro}`}
                 className={buttonVariants({ variant: "secondary", size: "sm" })}
               >
                 <div className="flex items-center gap-2">
-                  <span>{next.command}</span>
+                  <span>{next.distro}</span>
                   <ArrowRight size={14} />
                 </div>
               </Link>
