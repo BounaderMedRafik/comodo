@@ -108,4 +108,23 @@ export const contributors: contributersProps[] = [
     image: "",
     role: "Distro's logos source",
   },
+  {
+    name: "Aymen Melouah",
+    link: "https://github.com/Aymen-Melouah",
+    image: "https://avatars.githubusercontent.com/u/117318165?v=4",
+    role: "UX/UI specialist",
+  },
+  {
+    name: "Bouhadjar Ramzi",
+    link: "https://github.com/RBHDEV",
+    image: "https://avatars.githubusercontent.com/u/149131318?v=4",
+    role: "PWA integration",
+  },
+  {
+    name: "Lamri Monir Siradj",
+    link: "https://github.com/sirgio03",
+    image:
+      "https://scontent.faae2-1.fna.fbcdn.net/v/t39.30808-6/496155803_4099071153747368_7713837134469796041_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHNV0lH_CrTa4zci1KUGr8WyowpRVaeYAzKjClFVp5gDNKoMyCVKn2ASGCuPUBhiiswu5-ggtIxR9RdpphuubXP&_nc_ohc=pzRO7FtLnzEQ7kNvwHsRJvc&_nc_oc=AdmGhe4ho0bLBzzkz94KzZw6LwjCS8izrkE8Yg2ObeNP8OO8gGU7T5VMqtLLQCZT284&_nc_zt=23&_nc_ht=scontent.faae2-1.fna&_nc_gid=IW5OSLL4MXJ48-VnHr6edw&oh=00_AfKvhJjhDboDr-_X2SvcsYOUtS0nt0ABRtWeRiBUNSRwlg&oe=683A3538",
+    role: "Brand Design",
+  },
 ];

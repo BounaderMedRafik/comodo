@@ -26,7 +26,7 @@ const AboutPageContent = () => {
 
       <div className=" mt-10">
         <div className=" text-2xl font-mono">Contributors</div>
-        <div className=" grid grid-cols-2 md:grid-cols-3 mt-4">
+        <div className=" grid grid-cols-2 md:grid-cols-3 mt-4 space-y-4">
           {contributors.map((item, i) => (
             <a
               key={i}
