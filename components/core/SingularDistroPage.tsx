@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+"use client";
+import React, { useEffect, useState, useMemo } from "react";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -21,19 +21,32 @@ const SingularDistroPage = ({ id }: { id: string }) => {
   const previous = distros[articleIndex - 1];
   const next = distros[articleIndex + 1];
 
-  const filePath = path.join(process.cwd(), article.content);
-  const markdown = fs.readFileSync(filePath, "utf8");
+  const [markdown, setMarkdown] = useState<string>("");
 
-  const markdownWithIds = markdown.replace(
-    /^(#{1,6})\s+(.*)$/gm,
-    (_, level, text) => {
+  useEffect(() => {
+    // Fetch markdown file from public folder via HTTP
+    fetch(article.content)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch markdown");
+        return res.text();
+      })
+      .then(setMarkdown)
+      .catch(() => {
+        setMarkdown("Error loading content.");
+      });
+  }, [article.content]);
+
+  // Inject IDs for headings in markdown (client-side)
+  const markdownWithIds = useMemo(() => {
+    if (!markdown) return "";
+    return markdown.replace(/^(#{1,6})\s+(.*)$/gm, (_, level, text) => {
       const id = text
         .toLowerCase()
         .replace(/[^\w\s]/g, "")
         .replace(/\s+/g, "-");
       return `${level} <a id="${id}" class="anchor"></a> ${text}`;
-    }
-  );
+    });
+  }, [markdown]);
 
   return (
     <main className="max-w-4xl mx-auto pt-12 flex flex-col lg:flex-row gap-8">
@@ -42,23 +55,29 @@ const SingularDistroPage = ({ id }: { id: string }) => {
           {article.distro}
         </div>
 
-        <a href={article.deskimage} target="_blank">
-          <img
-            src={article.deskimage}
-            className="rounded-none mb-2 shadow-2xl relative z-40"
-            alt={`${article.distro} desktop screenshot`}
-          />
+        <a href={article.deskimage} target="_blank" rel="noreferrer">
+          <div className="relative">
+            <img
+              src={article.deskimage}
+              alt={`${article.distro} desktop screenshot`}
+              className="rounded-none mb-2 shadow-2xl relative z-40"
+            />
+          </div>
         </a>
 
         <div className="p-3 md:p-0 relative z-20">
           <h1 className="text-3xl font-bold mb-6">{article.distro}</h1>
 
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeHighlight, rehypeRaw]}
-          >
-            {markdownWithIds}
-          </ReactMarkdown>
+          {markdown ? (
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight, rehypeRaw]}
+            >
+              {markdownWithIds}
+            </ReactMarkdown>
+          ) : (
+            <p>Loading content...</p>
+          )}
 
           <footer className="mt-8 flex justify-between text-sm text-muted-foreground border-t pt-4 pb-24">
             {previous ? (
@@ -66,8 +85,10 @@ const SingularDistroPage = ({ id }: { id: string }) => {
                 href={`/distros/${previous.distro}`}
                 className={buttonVariants({ variant: "secondary", size: "sm" })}
               >
-                <ArrowLeft size={14} />
-                <span>{previous.distro}</span>
+                <div className="flex items-center gap-2">
+                  <ArrowLeft size={14} />
+                  <span>{previous.distro}</span>
+                </div>
               </Link>
             ) : (
               <div />
@@ -78,8 +99,10 @@ const SingularDistroPage = ({ id }: { id: string }) => {
                 href={`/distros/${next.distro}`}
                 className={buttonVariants({ variant: "secondary", size: "sm" })}
               >
-                <span>{next.distro}</span>
-                <ArrowRight size={14} />
+                <div className="flex items-center gap-2">
+                  <span>{next.distro}</span>
+                  <ArrowRight size={14} />
+                </div>
               </Link>
             ) : (
               <div />

@@ -1,30 +1,42 @@
 "use client";
-import React, { useMemo } from "react";
+
+import React, { useEffect, useState, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/mono-blue.css";
+import { notFound } from "next/navigation";
 
+import { commands } from "@/db/commands-v1";
+import TableOfContents from "@/components/core/layout/TableOfContents";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
-import TableOfContents from "@/components/core/layout/TableOfContents";
-import { commands } from "@/db/commands-v1";
+import { buttonVariants } from "../ui/button";
 
-interface SingularCommandPageProps {
-  id: string;
-  markdown: string;
-}
-
-const SingularCommandPage: React.FC<SingularCommandPageProps> = ({
-  id,
-  markdown,
-}) => {
+const SingularCommandPage = ({ id }: { id: string }) => {
   const articleIndex = commands.findIndex((cmd) => cmd.command === id);
+  if (articleIndex === -1) notFound();
+
   const article = commands[articleIndex];
   const previous = commands[articleIndex - 1];
   const next = commands[articleIndex + 1];
+
+  const [markdown, setMarkdown] = useState<string>("");
+
+  useEffect(() => {
+    // Fetch markdown file from the public folder
+    fetch(article.content)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch markdown");
+        return res.text();
+      })
+      .then(setMarkdown)
+      .catch(() => {
+        // Handle error or fallback
+        setMarkdown("## Error loading content.");
+      });
+  }, [article.content]);
 
   const markdownWithIds = useMemo(() => {
     return markdown.replace(/^(#{1,6})\s+(.*)$/gm, (_, level, text) => {
@@ -35,6 +47,8 @@ const SingularCommandPage: React.FC<SingularCommandPageProps> = ({
       return `${level} <a id="${id}" class="anchor"></a> ${text}`;
     });
   }, [markdown]);
+
+  if (!markdown) return <p>Loading...</p>;
 
   return (
     <main className="max-w-4xl mx-auto pt-12 flex flex-col lg:flex-row gap-8">

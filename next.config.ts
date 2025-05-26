@@ -1,16 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ["fs"], // optional
-  },
-  webpack(config) {
-    config.module?.rules?.push({
-      test: /\.md$/,
-      use: "raw-loader",
-    });
-    return config;
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
