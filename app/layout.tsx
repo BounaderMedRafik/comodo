@@ -32,7 +32,7 @@ export const metadata: Metadata = {
       "Master Linux with Confidence — Learn essential commands, explore powerful distros, and sharpen your Linux skills with clarity and ease.",
     locale: "en_US",
     type: "website",
-    url: "", // Change this if the final site URL is different
+    url: "https://comodo.vercel.app/", // Change this if the final site URL is different
     images: [
       {
         url: "https://hxcqxvdpfctfywkxocdr.supabase.co/storage/v1/object/public/MyPics/work/komodoartwork.png", // Replace with a Comodo-themed image if applicable

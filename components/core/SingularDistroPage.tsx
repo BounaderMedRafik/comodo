@@ -12,6 +12,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import TableOfContents from "@/components/core/layout/TableOfContents";
 import { distros } from "@/db/distros-v1";
+import LoadingComponent from "./LoadingComponent";
 
 const SingularDistroPage = ({ id }: { id: string }) => {
   const articleIndex = distros.findIndex((cmd) => cmd.distro === id);
@@ -48,6 +49,7 @@ const SingularDistroPage = ({ id }: { id: string }) => {
     });
   }, [markdown]);
 
+  if (!markdown) return <LoadingComponent />;
   return (
     <main className="max-w-4xl mx-auto pt-12 flex flex-col lg:flex-row gap-8">
       <div className="flex-1 max-w-3xl relative bg-background">

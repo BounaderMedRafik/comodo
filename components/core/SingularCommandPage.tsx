@@ -13,6 +13,7 @@ import TableOfContents from "@/components/core/layout/TableOfContents";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { buttonVariants } from "../ui/button";
+import LoadingComponent from "./LoadingComponent";
 
 const SingularCommandPage = ({ id }: { id: string }) => {
   const articleIndex = commands.findIndex((cmd) => cmd.command === id);
@@ -48,7 +49,7 @@ const SingularCommandPage = ({ id }: { id: string }) => {
     });
   }, [markdown]);
 
-  if (!markdown) return <p>Loading...</p>;
+  if (!markdown) return <LoadingComponent />;
 
   return (
     <main className="max-w-4xl mx-auto pt-12 flex flex-col lg:flex-row gap-8">
