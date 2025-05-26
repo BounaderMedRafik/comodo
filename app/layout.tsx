@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   icons: {
     icon: "/brand/v4/COMODO.png", // Update this path if needed
   },
+  verification: {
+    google: "",
+  },
   openGraph: {
     title: "Comodo Linux Guide",
     description:
