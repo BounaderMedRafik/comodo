@@ -1,43 +1,40 @@
-import fs from "fs";
-import path from "path";
-import { notFound } from "next/navigation";
+"use client";
+import React, { useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/mono-blue.css";
 
-import { commands } from "@/db/commands-v1";
-import TableOfContents from "@/components/core/layout/TableOfContents";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import TableOfContents from "@/components/core/layout/TableOfContents";
+import { commands } from "@/db/commands-v1";
 
 interface SingularCommandPageProps {
   id: string;
+  markdown: string;
 }
 
-const SingularCommandPage = ({ id }: SingularCommandPageProps) => {
+const SingularCommandPage: React.FC<SingularCommandPageProps> = ({
+  id,
+  markdown,
+}) => {
   const articleIndex = commands.findIndex((cmd) => cmd.command === id);
-  if (articleIndex === -1) notFound();
-
   const article = commands[articleIndex];
   const previous = commands[articleIndex - 1];
   const next = commands[articleIndex + 1];
 
-  const filePath = path.join(process.cwd(), article.content);
-  const markdown = fs.readFileSync(filePath, "utf8");
-
-  const markdownWithIds = markdown.replace(
-    /^(#{1,6})\s+(.*)$/gm,
-    (_, level, text) => {
+  const markdownWithIds = useMemo(() => {
+    return markdown.replace(/^(#{1,6})\s+(.*)$/gm, (_, level, text) => {
       const id = text
         .toLowerCase()
         .replace(/[^\w\s]/g, "")
         .replace(/\s+/g, "-");
       return `${level} <a id="${id}" class="anchor"></a> ${text}`;
-    }
-  );
+    });
+  }, [markdown]);
 
   return (
     <main className="max-w-4xl mx-auto pt-12 flex flex-col lg:flex-row gap-8">
