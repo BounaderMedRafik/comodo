@@ -1,5 +1,3 @@
-"use client";
-import React, { useMemo } from "react";
 import fs from "fs";
 import path from "path";
 import { notFound } from "next/navigation";
@@ -13,9 +11,13 @@ import { commands } from "@/db/commands-v1";
 import TableOfContents from "@/components/core/layout/TableOfContents";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { buttonVariants } from "../ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
-const SingularCommandPage = ({ id }: { id: string }) => {
+interface SingularCommandPageProps {
+  id: string;
+}
+
+const SingularCommandPage = ({ id }: SingularCommandPageProps) => {
   const articleIndex = commands.findIndex((cmd) => cmd.command === id);
   if (articleIndex === -1) notFound();
 
@@ -23,20 +25,19 @@ const SingularCommandPage = ({ id }: { id: string }) => {
   const previous = commands[articleIndex - 1];
   const next = commands[articleIndex + 1];
 
-  // Read markdown content
   const filePath = path.join(process.cwd(), article.content);
   const markdown = fs.readFileSync(filePath, "utf8");
 
-  // Inject IDs for headings
-  const markdownWithIds = useMemo(() => {
-    return markdown.replace(/^(#{1,6})\s+(.*)$/gm, (_, level, text) => {
+  const markdownWithIds = markdown.replace(
+    /^(#{1,6})\s+(.*)$/gm,
+    (_, level, text) => {
       const id = text
         .toLowerCase()
         .replace(/[^\w\s]/g, "")
         .replace(/\s+/g, "-");
       return `${level} <a id="${id}" class="anchor"></a> ${text}`;
-    });
-  }, [markdown]);
+    }
+  );
 
   return (
     <main className="max-w-4xl mx-auto pt-12 flex flex-col lg:flex-row gap-8">

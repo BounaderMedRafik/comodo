@@ -1,9 +1,6 @@
-"use client";
-import React from "react";
 import fs from "fs";
 import path from "path";
 import { notFound } from "next/navigation";
-import { use, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
@@ -24,19 +21,20 @@ const SingularDistroPage = ({ id }: { id: string }) => {
   const previous = distros[articleIndex - 1];
   const next = distros[articleIndex + 1];
 
-  // Read the Markdown file at build-time or server-side
   const filePath = path.join(process.cwd(), article.content);
   const markdown = fs.readFileSync(filePath, "utf8");
 
-  const markdownWithIds = useMemo(() => {
-    return markdown.replace(/^(#{1,6})\s+(.*)$/gm, (_, level, text) => {
+  const markdownWithIds = markdown.replace(
+    /^(#{1,6})\s+(.*)$/gm,
+    (_, level, text) => {
       const id = text
         .toLowerCase()
         .replace(/[^\w\s]/g, "")
         .replace(/\s+/g, "-");
       return `${level} <a id="${id}" class="anchor"></a> ${text}`;
-    });
-  }, [markdown]);
+    }
+  );
+
   return (
     <main className="max-w-4xl mx-auto pt-12 flex flex-col lg:flex-row gap-8">
       <div className="flex-1 max-w-3xl relative bg-background">
@@ -45,13 +43,11 @@ const SingularDistroPage = ({ id }: { id: string }) => {
         </div>
 
         <a href={article.deskimage} target="_blank">
-          <div className="relative">
-            <img
-              src={article.deskimage}
-              className="rounded-none mb-2 shadow-2xl relative z-40"
-              alt={`${article.distro} desktop screenshot`}
-            />
-          </div>
+          <img
+            src={article.deskimage}
+            className="rounded-none mb-2 shadow-2xl relative z-40"
+            alt={`${article.distro} desktop screenshot`}
+          />
         </a>
 
         <div className="p-3 md:p-0 relative z-20">
@@ -70,10 +66,8 @@ const SingularDistroPage = ({ id }: { id: string }) => {
                 href={`/distros/${previous.distro}`}
                 className={buttonVariants({ variant: "secondary", size: "sm" })}
               >
-                <div className="flex items-center gap-2">
-                  <ArrowLeft size={14} />
-                  <span>{previous.distro}</span>
-                </div>
+                <ArrowLeft size={14} />
+                <span>{previous.distro}</span>
               </Link>
             ) : (
               <div />
@@ -84,10 +78,8 @@ const SingularDistroPage = ({ id }: { id: string }) => {
                 href={`/distros/${next.distro}`}
                 className={buttonVariants({ variant: "secondary", size: "sm" })}
               >
-                <div className="flex items-center gap-2">
-                  <span>{next.distro}</span>
-                  <ArrowRight size={14} />
-                </div>
+                <span>{next.distro}</span>
+                <ArrowRight size={14} />
               </Link>
             ) : (
               <div />
